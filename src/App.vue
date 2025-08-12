@@ -1,7 +1,8 @@
 <script setup lang="ts">
-	import { ref, onMounted} from "vue"
+	import { ref, onMounted, watch, nextTick} from "vue"
 	import Mountain from './components/Mountain.vue'
 	import Road from './components/Road.vue'
+	import RidePicker from "./components/RidePicker.vue";
 	const currentStep = ref(1);
 	const goingUp = ref(true)
 	function nextStep() {
@@ -23,21 +24,18 @@
 	const udh = ref(false)
 	const mountainOrRoad = ref('Road')
 	const OnexorTwox = ref('')
+
+	watch(mountainOrRoad, async (old, newv) => {
+		await nextTick()
+		steps.value = document.querySelectorAll('.step-content').length
+		currentStep.value = 1
+		console.log(steps.value)
+	})
 </script>
 
 <template>
   <div>
-	<div class="ride">
-		<div>
-		<h1>Choose Road or Mountain</h1>
-		</div>
-		<div>
-			<select v-model="mountainOrRoad">
-				<option value="Road">Road</option>
-				<option value="Mountain">Mountain</option>
-			</select>
-		</div>
-	</div>
+	<RidePicker v-model:mountain-or-road="mountainOrRoad"/>
 	<section>
 		<div class="button-group">
 			<Mountain v-if="mountainOrRoad === 'Mountain'" :steps="steps" :going-up="goingUp" :current-step="currentStep" v-model:udh="udh"></Mountain>
@@ -48,10 +46,10 @@
 			</TransitionGroup>
 		</div>
 	</section>
-	<pre>
+	<!-- <pre>
 		udh{{udh}}
 		oneBy? {{OnexorTwox }}
-	</pre>
+	</pre> -->
   </div>
 </template>
 
@@ -165,18 +163,5 @@ section {
 	
 	}
 }
-.ride {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: space-between;
-	height: 50vh;
-	width: 40vw;
-	margin: auto;
-	select {
-		width: 100%;
-		height: 50px;
-		font-size: 20px;
-	}
-}
+
 </style>

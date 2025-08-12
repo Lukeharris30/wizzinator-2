@@ -17,7 +17,7 @@ const OnexorTwox = defineModel('OnexorTwox');
     <h1>Road</h1>
     <StepsContainer :steps="props.steps" :current-step="props.currentStep"/>
     <TransitionGroup :name="goingUp ? 'slide' : 'slideback'">
-			<StepContent :step-number="1" :current-step="props.currentStep">
+			<StepContent :step-number="1" :current-step="props.currentStep" key="1">
                 <label>
                     One by or Two by?
                 <select v-model="OnexorTwox">
@@ -26,13 +26,13 @@ const OnexorTwox = defineModel('OnexorTwox');
                 </select>
                 </label>
             </StepContent>
-            <StepContent :step-number="2" :current-step="props.currentStep">
+            <StepContent :step-number="2" :current-step="props.currentStep" key="2">
                 Another step
             </StepContent>
-            <StepContent :step-number="3" :current-step="props.currentStep">
+            <StepContent :step-number="3" :current-step="props.currentStep" key="3">
                 almost last step
             </StepContent>
-            <StepContent :step-number="4" :current-step="props.currentStep">
+            <StepContent :step-number="4" :current-step="props.currentStep" key="4">
                 Last step
             </StepContent>
         </TransitionGroup>
