@@ -1,5 +1,7 @@
 <script setup lang="ts">
 	import { ref, onMounted} from "vue"
+	import Mountain from './components/Mountain.vue'
+	import Road from './components/Road.vue'
 	const currentStep = ref(1);
 	const goingUp = ref(true)
 	function nextStep() {
@@ -18,41 +20,42 @@
 	onMounted(() => {
 		steps.value = document.querySelectorAll('.step-content').length
 	})
-	// form data
-	const udh = ref('')
-
+	const udh = ref(false)
+	const mountainOrRoad = ref('Road')
+	const OnexorTwox = ref('')
 </script>
 
 <template>
   <div>
-	<section>
-		<h1>Mountain</h1>
-		<div class="steps-container">
-			<div v-for="(number, index) of steps" class="steps" :class="{selected: index === (currentStep -1)}" :key="index">{{currentStep > number ? '&#10003;' : index + 1}}</div>
+	<div class="ride">
+		<div>
+		<h1>Choose Road or Mountain</h1>
 		</div>
-		<TransitionGroup :name="goingUp ? 'slide' : 'slideback'">
-			<div v-show="currentStep === 1" key="1" class="step-content">
-				<label>UDH?<input type="checkbox" v-model="udh"/></label>
-			</div>
-			<div v-show="currentStep === 2" key="2" class="step-content">
-				Step two
-			</div>
-			<div v-show="currentStep === 3" key="3" class="step-content">
-				Step three
-			</div>
-		</TransitionGroup>
+		<div>
+			<select v-model="mountainOrRoad">
+				<option value="Road">Road</option>
+				<option value="Mountain">Mountain</option>
+			</select>
+		</div>
+	</div>
+	<section>
 		<div class="button-group">
+			<Mountain v-if="mountainOrRoad === 'Mountain'" :steps="steps" :going-up="goingUp" :current-step="currentStep" v-model:udh="udh"></Mountain>
+			<Road v-if="mountainOrRoad === 'Road'" :steps="steps" :going-up="goingUp" :currentStep="currentStep" v-model:OnexorTwox="OnexorTwox"></Road>
 		   	<TransitionGroup name="fade">
 				<button key="prev" class="prev" v-show="currentStep > 1" @click="previousStep">&#x2190;</button>
 				<button key="next" class="next" v-show="currentStep < steps" @click="nextStep">&#x2192;</button>
 			</TransitionGroup>
 		</div>
 	</section>
-	<pre>udh{{udh}}</pre>
+	<pre>
+		udh{{udh}}
+		oneBy? {{OnexorTwox }}
+	</pre>
   </div>
 </template>
 
-<style scoped>
+<style >
 
 section {
 	margin: auto;
@@ -81,8 +84,20 @@ section {
 		left: 0;
 	}
 }
+.fadestep-enter-active, .fadestep-leave-active{
+	transition: all .4s ease;
+}
+.fadestep-enter-from{
+	background: #fff;
+	color: black;
+}
+.fadestep-leave-to{
+	background: #e51937;
+	color: #fff;
+}
+
 .fade-enter-active, .fade-leave-active{
-	transition: opacity .4s ease;
+	transition: all .4s ease;
 }
 .fade-leave-active{
 	position: absolute;
@@ -139,14 +154,29 @@ section {
       justify-content: center;
 }
 .selected {
-	    background: #eee;
+	    background: #e51937;
+		color: #fff;
 }
 .steps:has(~ .selected){
-	background: red;
+	background: #e51937;
+	color: #fff;
 	&::after{
 		content:'';
 	
 	}
 }
-
+.ride {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: space-between;
+	height: 50vh;
+	width: 40vw;
+	margin: auto;
+	select {
+		width: 100%;
+		height: 50px;
+		font-size: 20px;
+	}
+}
 </style>
