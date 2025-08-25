@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {defineProps, ref, defineModel, watch} from 'vue'
 import StepsContainer from './StepsContainer.vue';
+import StepContent from './StepContent.vue';
 const props = defineProps(
     {
         steps: Number,
@@ -17,24 +18,27 @@ const udh = defineModel('udh')
         <StepsContainer :steps="props.steps" :current-step="props.currentStep"/>
 		<!-- steps -->
 		<TransitionGroup :name="goingUp ? 'slide' : 'slideback'">
-			<div v-show="currentStep === 1" key="1" class="step-content">
-			<fieldset>
+		<StepContent :step-number="1" :current-step="props.currentStep" key="1">
 				<h2>UDH?</h2>
 				<p>If your frame is UDH compatible, you can use Transmission, a direct mount to your bike frame.</p>
 				<fieldset>
 					My frame is UDH
-				<label>yes<input id="udh" type="checkbox" v-model="udh"/></label>
-				<label>no<input id="udh" type="checkbox" v-model="udh"/></label>
+				<label>yes<input id="udh_yes" value="yes" type="radio" v-model="udh"/></label>
+				<label>no<input id="use_no" value="no" type="radio" v-model="udh"/></label>
 				</fieldset>
-			</fieldset>
 				
-			</div>
-			<div v-show="currentStep === 2" key="2" class="step-content">
-				Step two
-			</div>
-			<div v-show="currentStep === 3" key="3" class="step-content">
+		</StepContent>
+		<StepContent :step-number="2" :current-step="props.currentStep" key="2">
+			<h2>Mechanical or AXS?</h2>
+			<p>We offer mechanichal shifting or electronic. Unsure which you want, <a href="https://sram.com">find out which is better for you.</a></p>
+			<label>Mechanical<input type="radio" id="mechanical" value="mechanical"/></label>
+			<label>Electronic (AXS)<input type="radio" id="Electronic" value="axs"/></label>
+			
+			
+		</StepContent>
+		<StepContent :step-number="3" :current-step="props.currentStep" key="3">
 				Step three
-			</div>
+		</StepContent>
 		</TransitionGroup>
 	
 </template>

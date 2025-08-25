@@ -36,7 +36,7 @@
 <template>
   <div>
 	<RidePicker v-model:mountain-or-road="mountainOrRoad"/>
-	<section>
+	<section class="wizzard-body">
 		<div class="button-group">
 			<Mountain v-if="mountainOrRoad === 'Mountain'" :steps="steps" :going-up="goingUp" :current-step="currentStep" v-model:udh="udh"></Mountain>
 			<Road v-if="mountainOrRoad === 'Road'" :steps="steps" :going-up="goingUp" :currentStep="currentStep" v-model:OnexorTwox="OnexorTwox"></Road>
@@ -59,15 +59,22 @@ section {
 	margin: auto;
 	text-align: center;
 	width: 40vw;
-}
+}	
+.wizzard-body{
+	height: 100vh;
+	display: flex;
+	align-items: center;
+}	
 .step-content{
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	min-height: 200px;
+	flex-direction: column;
 }
 .button-group {
 	position: relative;
+	width: 100%;
 	button {
 		position: absolute;
 		width: 40px;

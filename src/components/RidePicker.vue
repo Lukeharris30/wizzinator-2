@@ -27,7 +27,7 @@ watch(mountainOrRoad, (newval, oldval) =>{
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	height: 60vh;
+	height: 100vh;
 	width: 40vw;
 	margin: auto;
 	select {
