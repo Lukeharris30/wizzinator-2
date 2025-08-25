@@ -18,7 +18,16 @@ const udh = defineModel('udh')
 		<!-- steps -->
 		<TransitionGroup :name="goingUp ? 'slide' : 'slideback'">
 			<div v-show="currentStep === 1" key="1" class="step-content">
-				<label>UDH?<input id="udh" type="checkbox" v-model="udh"/></label>
+			<fieldset>
+				<h2>UDH?</h2>
+				<p>If your frame is UDH compatible, you can use Transmission, a direct mount to your bike frame.</p>
+				<fieldset>
+					My frame is UDH
+				<label>yes<input id="udh" type="checkbox" v-model="udh"/></label>
+				<label>no<input id="udh" type="checkbox" v-model="udh"/></label>
+				</fieldset>
+			</fieldset>
+				
 			</div>
 			<div v-show="currentStep === 2" key="2" class="step-content">
 				Step two
